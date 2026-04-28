@@ -186,10 +186,8 @@ frontend/
 scripts/
   seed_mock_data.py          Generate mock founders for development
   run_matching.py            CLI trigger for matching run
-
-skills/
-  ingestion/SKILL.md         LLM pipeline specification
-  matching/SKILL.md          Matching engine specification
+  anon_read_tables.sql       RLS policies, run once in Supabase SQL editor
+  indexing_db.sql            Performance indexes, run once in Supabase SQL editor
 ```
 
 ---
