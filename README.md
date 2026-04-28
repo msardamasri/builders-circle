@@ -160,33 +160,37 @@ python scripts/run_matching.py --send
 
 ## Project structure
 
-builders-circle/
-├── backend/
-│   ├── main.py                  FastAPI entrypoint
-│   ├── pipeline/
-│   │   ├── ingestion.py         LangGraph ingestion pipeline
-│   │   └── matching.py          Rules engine and soft scoring
-│   ├── models/
-│   │   ├── founder.py           Pydantic schemas
-│   │   └── match.py
-│   ├── routes/
-│   │   ├── ingest.py            POST /api/ingest
-│   │   ├── match.py             POST /api/match
-│   │   └── introductions.py     POST /api/introductions
-│   └── db/
-│       ├── schema.sql           Source of truth for DB schema
-│       ├── indexes.sql          Performance indexes
-│       └── anon_read_tables.sql RLS policies
-├── frontend/
-│   ├── app/                     Next.js App Router pages
-│   ├── components/              Shared UI components
-│   └── lib/                     Supabase client, queries, server actions
-├── scripts/
-│   ├── seed_mock_data.py        Generate mock founders
-│   └── run_matching.py          CLI trigger for matching run
-└── skills/
-├── ingestion/SKILL.md       LLM pipeline specification
-└── matching/SKILL.md        Matching engine specification
+```
+backend/
+  main.py                    FastAPI entrypoint
+  pipeline/
+    ingestion.py             LangGraph ingestion pipeline (llama3.2:3b + mistral:7b)
+    matching.py              Rules engine and soft scoring
+  models/
+    founder.py               Pydantic schemas for founder profile
+    match.py                 Pydantic schemas for match
+  routes/
+    ingest.py                POST /api/ingest
+    match.py                 POST /api/match
+    introductions.py         POST /api/introductions
+  db/
+    schema.sql               Source of truth for DB schema
+    indexes.sql              Performance indexes
+    anon_read_tables.sql     RLS policies for anon access
+
+frontend/
+  app/                       Next.js App Router pages
+  components/                Shared UI components
+  lib/                       Supabase client, queries, server actions
+
+scripts/
+  seed_mock_data.py          Generate mock founders for development
+  run_matching.py            CLI trigger for matching run
+
+skills/
+  ingestion/SKILL.md         LLM pipeline specification
+  matching/SKILL.md          Matching engine specification
+```
 
 ---
 
