@@ -48,7 +48,7 @@ ArchetypeEnum = Literal[
 
 class Archetypes(BaseModel):
     primary: ArchetypeEnum
-    secondary: ArchetypeEnum
+    secondary: ArchetypeEnum | None = None
     confidence: float = Field(ge=0.0, le=1.0)
 
 

@@ -20,8 +20,5 @@ async def health() -> dict:
     return {"status": "ok"}
 
 
-# Routes imported here once implemented
-# from backend.routes import ingest, match, introductions
-# app.include_router(ingest.router)
-# app.include_router(match.router)
-# app.include_router(introductions.router)
+from routes.ingest import router as ingest_router
+app.include_router(ingest_router)
