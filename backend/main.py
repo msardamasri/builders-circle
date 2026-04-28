@@ -22,6 +22,8 @@ async def health() -> dict:
 
 from routes.ingest import router as ingest_router
 from routes.match import router as match_router
+from routes.introductions import router as introductions_router
 
 app.include_router(ingest_router)
 app.include_router(match_router)
+app.include_router(introductions_router)
