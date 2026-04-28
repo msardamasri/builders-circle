@@ -1,46 +1,42 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/dashboard",      label: "Overview",       icon: "▦" },
-  { href: "/matches",        label: "Matches",        icon: "⇄" },
-  { href: "/builders",       label: "Builders",       icon: "◉" },
-  { href: "/introductions",  label: "Introductions",  icon: "✉" },
+  { href: "/dashboard",     label: "Dashboard"      },
+  { href: "/builders",      label: "Builders"       },
+  { href: "/matches",       label: "Matches"        },
+  { href: "/introductions", label: "Introductions"  },
 ];
 
 export function Nav() {
   const path = usePathname();
-
   return (
-    <aside className="fixed left-0 top-0 h-screen w-56 bg-white border-r border-gray-100 flex flex-col z-10">
-      <div className="px-6 py-6 border-b border-gray-100">
-        <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">b2venture</p>
-        <h1 className="text-base font-semibold text-gray-900">Builders Circle</h1>
-      </div>
-      <nav className="flex-1 px-3 py-4 space-y-1">
-        {links.map((l) => {
+    <header style={{
+      position: "fixed", top: 0, left: 0, right: 0, height: 52,
+      background: "var(--white)", borderBottom: "1px solid var(--gray-200)",
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      padding: "0 32px", zIndex: 100,
+    }}>
+      <span style={{ fontWeight: 600, fontSize: 14, color: "var(--black)", letterSpacing: "-0.01em" }}>
+        Builders Circle
+      </span>
+      <nav style={{ display: "flex", gap: 4 }}>
+        {links.map(l => {
           const active = path.startsWith(l.href);
           return (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
-                active
-                  ? "bg-gray-900 text-white font-medium"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-              }`}
-            >
-              <span className="text-base">{l.icon}</span>
+            <Link key={l.href} href={l.href} style={{
+              padding: "5px 12px", borderRadius: 6, fontSize: 13, fontWeight: 500,
+              textDecoration: "none", transition: "background 0.12s",
+              background: active ? "var(--black)" : "transparent",
+              color: active ? "var(--white)" : "var(--gray-600)",
+            }}>
               {l.label}
             </Link>
           );
         })}
       </nav>
-      <div className="px-6 py-4 border-t border-gray-100">
-        <p className="text-xs text-gray-400">Privacy-first · Local AI</p>
-      </div>
-    </aside>
+      <span style={{ fontSize: 12, color: "var(--gray-400)" }}>b2venture</span>
+    </header>
   );
 }

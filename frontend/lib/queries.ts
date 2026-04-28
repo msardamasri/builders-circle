@@ -26,7 +26,7 @@ export const getDashboardMetrics = unstable_cache(
 // ── Matches ────────────────────────────────────────────────────────────────
 
 export async function getPendingMatches() {
-  const { data, error } = await supabase
+  const { data: matchData, error } = await supabase
     .from("matches")
     .select(`
       id, score, recommendation, match_thesis, main_concern, status, created_at,
@@ -38,7 +38,25 @@ export async function getPendingMatches() {
     .limit(50);
 
   if (error) throw new Error(error.message);
-  return data ?? [];
+  if (!matchData) return [];
+
+  // Fetch profiles in parallel for all matches
+  const founderIds = [...new Set(matchData.flatMap(m => [
+    (m.founder_a as any)?.id, (m.founder_b as any)?.id
+  ]).filter(Boolean))];
+
+  const { data: profiles } = await supabase
+    .from("founder_profiles")
+    .select("founder_id, profile_json")
+    .in("founder_id", founderIds);
+
+  const profileMap = Object.fromEntries((profiles ?? []).map(p => [p.founder_id, p.profile_json]));
+
+  return matchData.map(m => ({
+    ...m,
+    profileA: profileMap[(m.founder_a as any)?.id] ?? null,
+    profileB: profileMap[(m.founder_b as any)?.id] ?? null,
+  }));
 }
 
 // ── Builders ───────────────────────────────────────────────────────────────

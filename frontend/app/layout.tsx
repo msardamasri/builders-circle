@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import { Nav } from "@/components/nav";
 import "./globals.css";
-
-const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Builders Circle — b2venture",
@@ -13,10 +10,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geist.className} min-h-screen`} style={{ backgroundColor: "#f9fafb" }}>
+      <body style={{ margin: 0, background: "var(--gray-50)", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
         <Nav />
-        <main className="ml-56 min-h-screen">
-          <div className="max-w-5xl mx-auto px-8 py-10">
+        <main style={{ paddingTop: 52, minHeight: "100vh" }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 32px" }}>
             {children}
           </div>
         </main>
