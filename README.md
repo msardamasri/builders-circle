@@ -12,7 +12,6 @@ All LLM inference runs locally via Ollama. No founder data leaves the infrastruc
 This project was developed as part of an academic collaboration between ESADE alumni and b2venture VC.
 
 **Company mentors at b2venture**
-- Dominik Perisa — dominik.perisa@b2venture.vc
 - Karim El-Ghawi — karim.el-ghawi@b2venture.vc
 
 **Project team — ESADE alumni**
