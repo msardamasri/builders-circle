@@ -5,11 +5,19 @@ import { supabase } from "./supabase";
 
 export const getDashboardMetrics = unstable_cache(
   async () => {
+<<<<<<< HEAD
     const [founders, pending, intros, strong] = await Promise.all([
+=======
+    const [founders, pending, intros, strong, awaitingApps] = await Promise.all([
+>>>>>>> origin/feat/amat
       supabase.from("founders").select("id", { count: "exact", head: true }),
       supabase.from("matches").select("id", { count: "exact", head: true }).eq("status", "pending_review"),
       supabase.from("introductions").select("id", { count: "exact", head: true }),
       supabase.from("matches").select("id", { count: "exact", head: true }).eq("recommendation", "strong").eq("status", "pending_review"),
+<<<<<<< HEAD
+=======
+      supabase.from("applications").select("id", { count: "exact", head: true }).in("status", ["pending_review", "video_pending"]),
+>>>>>>> origin/feat/amat
     ]);
 
     return {
@@ -17,6 +25,10 @@ export const getDashboardMetrics = unstable_cache(
       pendingMatches: pending.count ?? 0,
       introsSent: intros.count ?? 0,
       strongMatches: strong.count ?? 0,
+<<<<<<< HEAD
+=======
+      awaitingApplications: awaitingApps.count ?? 0,
+>>>>>>> origin/feat/amat
     };
   },
   ["dashboard-metrics"],
@@ -40,7 +52,10 @@ export async function getPendingMatches() {
   if (error) throw new Error(error.message);
   if (!matchData) return [];
 
+<<<<<<< HEAD
   // Fetch profiles in parallel for all matches
+=======
+>>>>>>> origin/feat/amat
   const founderIds = [...new Set(matchData.flatMap(m => [
     (m.founder_a as any)?.id, (m.founder_b as any)?.id
   ]).filter(Boolean))];
@@ -99,4 +114,28 @@ export const getIntroductions = unstable_cache(
   },
   ["introductions-list"],
   { revalidate: 120 }
+<<<<<<< HEAD
 );
+=======
+);
+
+// ── Applications (NEW) ─────────────────────────────────────────────────────
+
+export async function getApplications(statusFilter?: string[]) {
+  let q = supabase.from("applications").select("*").order("created_at", { ascending: false });
+  if (statusFilter && statusFilter.length > 0) q = q.in("status", statusFilter);
+  const { data, error } = await q;
+  if (error) throw new Error(error.message);
+  return data ?? [];
+}
+
+export async function getApplicationById(id: string) {
+  const { data, error } = await supabase
+    .from("applications")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) throw new Error(error.message);
+  return data;
+}
+>>>>>>> origin/feat/amat

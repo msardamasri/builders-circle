@@ -4,4 +4,8 @@ import { MatchesClient } from "./matches-client";
 export default async function MatchesPage() {
   const matches = await getPendingMatches();
   return <MatchesClient initialMatches={matches as any[]} />;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/feat/amat

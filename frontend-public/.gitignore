@@ -39,7 +39,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-<<<<<<< HEAD
-=======
 .env.local
->>>>>>> origin/feat/amat
